@@ -1,4 +1,6 @@
 // Copyright 2021 NNTU-CS
+#include "alg.h"
+
 int countPairs1(int *arr, int len, int value) {
     int count = 0;
     for (int i = 0; i < len; i++) {
@@ -10,6 +12,7 @@ int countPairs1(int *arr, int len, int value) {
     }
     return count;
 }
+
 int countPairs2(int *arr, int len, int value) {
     int count = 0;
     int left = 0;
@@ -20,10 +23,12 @@ int countPairs2(int *arr, int len, int value) {
         if (sum == value) {
             int leftCount = 1;
             int rightCount = 1;
+            
             while (left + 1 < right && arr[left] == arr[left + 1]) {
                 leftCount++;
                 left++;
             }
+            
             while (right - 1 > left && arr[right] == arr[right - 1]) {
                 rightCount++;
                 right--;
@@ -61,23 +66,27 @@ int countPairs3(int *arr, int len, int value) {
     for (int i = 0; i < len; i++) {
         int target = value - arr[i];
         int pos = binarySearch(arr, i + 1, len - 1, target);
+        
         if (pos != -1) {
             int targetCount = 1;
+            
             int j = pos - 1;
             while (j > i && arr[j] == target) {
                 targetCount++;
                 j--;
             }
+            
             j = pos + 1;
             while (j < len && arr[j] == target) {
                 targetCount++;
                 j++;
             }
+            
             count += targetCount;
-            i += (arr[i + 1] == arr[i] ? 0 : 0);
-        }
-        while (i + 1 < len && arr[i] == arr[i + 1]) {
-            i++;
+            
+            while (i + 1 < len && arr[i] == arr[i + 1]) {
+                i++;
+            }
         }
     }
     return count;
